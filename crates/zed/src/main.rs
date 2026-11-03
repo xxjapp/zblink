@@ -1455,7 +1455,10 @@ pub(crate) async fn restore_or_create_workspace(
     cx: &mut AsyncApp,
 ) -> Result<()> {
     let kvp = cx.update(|cx| KeyValueStore::global(cx));
-    if let Some(multi_workspaces) = restorable_workspaces(cx, &app_state).await {
+    perf_mark("restore_start");
+    let restorable = restorable_workspaces(cx, &app_state).await;
+    perf_mark("restorable_loaded");
+    if let Some(multi_workspaces) = restorable {
         let mut error_count = 0;
         for multi_workspace in multi_workspaces {
             let result = match &multi_workspace.active_workspace.location {

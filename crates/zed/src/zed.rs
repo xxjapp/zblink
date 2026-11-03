@@ -553,6 +553,7 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut App) {
         let Some(window) = window else {
             return;
         };
+        crate::perf_mark("workspace_setup_start");
 
         let workspace_handle = cx.entity();
         let center_pane = workspace.active_pane().clone();
@@ -659,6 +660,7 @@ pub fn initialize_workspace(app_state: Arc<AppState>, cx: &mut App) {
         if !workspace.has_active_modal(window, cx) {
             workspace.focus_handle(cx).focus(window, cx);
         }
+        crate::perf_mark("workspace_setup_done");
     })
     .detach();
 }
@@ -813,6 +815,7 @@ fn initialize_panels(window: &mut Window, cx: &mut Context<Workspace>) -> Task<a
         workspace_handle.update(cx, |workspace, cx| {
             workspace.finish_dock_restoration(cx);
         })?;
+        crate::perf_mark("panels_loaded");
 
         anyhow::Ok(())
     })
