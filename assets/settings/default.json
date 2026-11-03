@@ -168,7 +168,8 @@
   //         "restore_on_startup": "last_workspace",
   //  3. Do not restore previous workspaces
   //         "restore_on_startup": "none",
-  "restore_on_startup": "last_session",
+  // zblink defaults to an empty tab for fast startup.
+  "restore_on_startup": "empty_tab",
   // The default behavior when opening paths from the CLI without
   // an explicit `-e` (existing window) or `-n` (new window) flag.
   //
@@ -1717,20 +1718,22 @@
   // Control what info is collected by Zed.
   "telemetry": {
     // Send debug info like crash reports.
-    "diagnostics": true,
+    "diagnostics": false,
     // Send anonymized usage data like what languages you're using Zed with.
-    "metrics": true,
+    "metrics": false,
     // Allow sending requests to Anthropic models that cannot be offered with
     // Zero Data Retention
     "anthropic_retention": false,
   },
   // Whether to disable all AI features in Zed.
   //
-  // Default: false
-  "disable_ai": false,
+  // Default: true (zblink). Note that this setting can only be turned on by
+  // later settings layers, so user settings cannot re-enable AI features.
+  "disable_ai": true,
   // Automatically update Zed. This setting may be ignored on Linux if
   // installed through a package manager.
-  "auto_update": true,
+  // zblink: updates from Zed are disabled at build time (ZED_UPDATE_EXPLANATION).
+  "auto_update": false,
   // How to render LSP `textDocument/documentColor` colors in the editor.
   //
   // Possible values:
@@ -2364,7 +2367,7 @@
   // If you don't want any of these extensions, add this field to your settings
   // and change the value to `false`.
   "auto_install_extensions": {
-    "html": true,
+    "html": false,
   },
   // Whether to suggest installing extensions based on the files you open.
   "suggest_extensions": true,
@@ -2433,13 +2436,13 @@
       "format_on_save": "on",
       "language_servers": ["astro-language-server", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
         "plugins": ["prettier-plugin-astro"],
       },
     },
     "Blade": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "C": {
@@ -2459,7 +2462,7 @@
     },
     "CSS": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "Dart": {
@@ -2502,7 +2505,7 @@
     "GraphQL": {
       "format_on_save": "on",
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "HEEx": {
@@ -2511,7 +2514,7 @@
     },
     "HTML": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "HTML+ERB": {
@@ -2519,24 +2522,24 @@
     },
     "Java": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
         "plugins": ["prettier-plugin-java"],
       },
     },
     "JavaScript": {
       "language_servers": ["!typescript-language-server", "vtsls", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "JSON": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "JSONC": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "JS+ERB": {
@@ -2550,7 +2553,7 @@
       "formatter": "language_server",
       "language_servers": ["texlab", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
         "plugins": ["prettier-plugin-latex"],
       },
     },
@@ -2563,13 +2566,13 @@
         "words": "disabled",
       },
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "PHP": {
       "language_servers": ["phpactor", "!intelephense", "!phptools", "!phpantom", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
         "plugins": ["@prettier/plugin-php"],
         "parser": "php",
       },
@@ -2614,7 +2617,7 @@
     },
     "SCSS": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "Starlark": {
@@ -2624,25 +2627,25 @@
     "Svelte": {
       "language_servers": ["svelte-language-server", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
         "plugins": ["prettier-plugin-svelte"],
       },
     },
     "TSX": {
       "language_servers": ["!typescript-language-server", "vtsls", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "Twig": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "TypeScript": {
       "language_servers": ["!typescript-language-server", "vtsls", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "Typst": {
@@ -2655,18 +2658,18 @@
     "Vue.js": {
       "language_servers": ["vue-language-server", "vtsls", "..."],
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "XML": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
         "plugins": ["@prettier/plugin-xml"],
       },
     },
     "YAML": {
       "prettier": {
-        "allowed": true,
+        "allowed": false,
       },
     },
     "YAML+ERB": {

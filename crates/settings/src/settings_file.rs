@@ -162,6 +162,18 @@ pub fn test_settings() -> &'static str {
             }),
             &mut value,
         );
+        // Keep upstream defaults for settings that zblink changes, so that
+        // tests keep exercising upstream behavior.
+        util::merge_non_null_json_value_into(
+            serde_json::json!({
+                "restore_on_startup": "last_session",
+                "disable_ai": false,
+                "auto_update": true,
+                "auto_install_extensions": { "html": true },
+                "telemetry": { "diagnostics": true, "metrics": true },
+            }),
+            &mut value,
+        );
         value.as_object_mut().unwrap().remove("languages");
         serde_json::to_string(&value).unwrap()
     });

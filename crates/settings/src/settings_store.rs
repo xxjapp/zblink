@@ -1872,7 +1872,7 @@ mod tests {
 
     #[gpui::test]
     fn test_settings_store_basic(cx: &mut App) {
-        let mut store = SettingsStore::new(cx, &default_settings());
+        let mut store = SettingsStore::new(cx, &test_settings());
         store.register_setting::<AutoUpdateSetting>();
         store.register_setting::<ItemSettings>();
         store.register_setting::<DefaultLanguageSettings>();
