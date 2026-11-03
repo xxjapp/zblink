@@ -338,7 +338,9 @@ impl DirectXRenderer {
             return Ok(());
         }
         self.render(scene, background_appearance)?;
-        self.present()
+        self.present()?;
+        crate::perf_marker::on_present();
+        Ok(())
     }
 
     /// Clear the render target for `background_appearance` and encode every

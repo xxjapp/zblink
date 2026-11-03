@@ -241,6 +241,7 @@ nix = { workspace = true, features = ["user"] }
 
 [target.'cfg(target_os = "windows")'.dependencies]
 etw_tracing.workspace = true
+gpui_windows.workspace = true
 windows = { workspace = true, features = ["Win32_System_Console", "Win32_System_Pipes"] }
 gpui = { workspace = true, features = ["profiler", "windows-manifest"] }
 
