@@ -820,7 +820,9 @@ impl PlatformWindow for WindowsWindow {
         self.0
             .executor
             .spawn(async move {
+                crate::perf_marker::mark_once("show_start");
                 this.set_window_placement().log_err();
+                crate::perf_marker::mark_once("show_done");
 
                 unsafe {
                     // If the window is minimized, restore it.

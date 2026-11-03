@@ -812,7 +812,9 @@ impl Platform for WindowsPlatform {
         if !self.is_windowed() {
             return Err(anyhow!("cannot open windows while headless"));
         }
+        crate::perf_marker::mark_once("window_create_start");
         let window = WindowsWindow::new(handle, options, self.generate_creation_info())?;
+        crate::perf_marker::mark_once("window_create_done");
         let handle = window.get_raw_handle();
         self.raw_window_handles.write().push(TrackedWindow {
             handle: handle.into(),

@@ -43,6 +43,21 @@ pub fn mark(name: &str) {
     }
 }
 
+static MARKED_ONCE: Mutex<Vec<&'static str>> = Mutex::new(Vec::new());
+
+/// Records `name` the first time it is reached, for steps that repeat on every frame or window.
+pub fn mark_once(name: &'static str) {
+    if MARKER_FILE.is_none() {
+        return;
+    }
+    let mut marked = MARKED_ONCE.lock();
+    if !marked.contains(&name) {
+        marked.push(name);
+        drop(marked);
+        mark(name);
+    }
+}
+
 pub fn mark_on_next_present(name: &'static str) {
     if MARKER_FILE.is_some() {
         *ON_NEXT_PRESENT.lock() = Some(name);

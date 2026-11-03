@@ -1366,6 +1366,7 @@ impl WindowsWindowInner {
             return Some(0);
         };
         let mut request_frame = self.state.callbacks.request_frame.take()?;
+        crate::perf_marker::mark_once("first_draw_start");
 
         self.state.direct_manipulation.update();
 
