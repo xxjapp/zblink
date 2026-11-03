@@ -8,6 +8,7 @@ use std::{
         Arc,
         atomic::{AtomicBool, Ordering},
     },
+    thread::JoinHandle,
 };
 
 use anyhow::{Context as _, Result, anyhow};
@@ -57,6 +58,9 @@ pub struct WindowsPlatform {
     initial_windowing: RefCell<Option<WindowingRequest>>,
     /// Set to stop the current `VSyncProvider` thread, which runs while windowed.
     vsync_stop: RefCell<Option<Arc<AtomicBool>>>,
+    /// DirectX devices being created in the background since `new`, taken by the first
+    /// `attach_gpu`. Later attaches (switching modes, device loss) create devices synchronously.
+    pending_directx_devices: RefCell<Option<JoinHandle<Result<DirectXDevices>>>>,
     // The below members will never change throughout the entire lifecycle of the app.
     /// Created with `headless()`: never windowed, and without a real text system.
     headless: bool,
@@ -183,6 +187,22 @@ impl Drop for PowerRequest {
 
 impl WindowsPlatform {
     pub fn new(headless: bool) -> Result<Self> {
+        // Creating the devices takes over 100ms in the graphics driver, so it overlaps the rest of
+        // the platform and app setup instead of starting when `run` connects.
+        let pending_directx_devices = if headless {
+            None
+        } else {
+            std::thread::Builder::new()
+                .name("DirectXDevicesInit".into())
+                .spawn(|| {
+                    crate::perf_marker::mark("gpu_init_start");
+                    let devices = DirectXDevices::new();
+                    crate::perf_marker::mark("gpu_init_done");
+                    devices
+                })
+                .context("Spawning the DirectX device thread, creating devices on connect instead")
+                .log_err()
+        };
         unsafe {
             OleInitialize(None).context("unable to initialize Windows OLE")?;
         }
@@ -283,6 +303,7 @@ impl WindowsPlatform {
             raw_window_handles,
             initial_windowing: RefCell::new(None),
             vsync_stop: RefCell::new(None),
+            pending_directx_devices: RefCell::new(pending_directx_devices),
             headless,
             icon,
             background_executor,
@@ -403,25 +424,47 @@ impl WindowsPlatform {
     /// Panics if DirectX can't be initialized, since the app can't start. Starts headless if this
     /// process can't show windows, for example when started over SSH.
     fn connect_initially(&self) {
+        if let Some(text_system) = &self.direct_write_text_system {
+            text_system.install_system_font_collection();
+        }
         let request = self
             .initial_windowing
             .borrow_mut()
             .take()
             .unwrap_or_else(|| WindowingRequest::Windowed(GraphicalEnvironment::detect()));
         let WindowingRequest::Windowed(environment) = request else {
+            self.discard_pending_directx_devices();
             return;
         };
         if let Err(error) = check_can_show_windows(&environment) {
             log::info!("starting headless: {error:#}");
+            self.discard_pending_directx_devices();
             return;
         }
         self.attach_gpu()
             .unwrap_or_else(|error| panic!("failed to initialize DirectX: {error:#}"));
+        crate::perf_marker::mark("platform_join_done");
+    }
+
+    /// Drops the devices created in the background for a windowed start that didn't happen. The
+    /// thread is detached: it finishes on its own and releases the devices.
+    fn discard_pending_directx_devices(&self) {
+        if self.pending_directx_devices.borrow_mut().take().is_some() {
+            log::info!("discarding DirectX devices created in the background for a windowed start");
+        }
     }
 
     /// Creates the DirectX devices that windows draw with, and starts vsync.
     fn attach_gpu(&self) -> Result<()> {
-        let devices = DirectXDevices::new().context("Creating DirectX devices")?;
+        let pending = self.pending_directx_devices.borrow_mut().take();
+        let devices = match pending {
+            Some(pending) => pending
+                .join()
+                .map_err(|_| anyhow!("the DirectX device thread panicked"))
+                .and_then(|result| result),
+            None => DirectXDevices::new(),
+        }
+        .context("Creating DirectX devices")?;
         if let Some(text_system) = &self.direct_write_text_system {
             text_system.handle_gpu_lost(&devices)?;
         }
