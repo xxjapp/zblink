@@ -22,3 +22,5 @@ rustflags = ["-C", "link-arg=-fuse-ld=lld"]
 
 [env]
 MACOSX_DEPLOYMENT_TARGET = "12.0"
+# zblink: disable updating from Zed's release server (both automatic and manual checks).
+ZED_UPDATE_EXPLANATION = "zblink does not support updating from Zed. See https://github.com/xxjapp/zblink for new versions."
