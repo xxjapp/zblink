@@ -198,7 +198,14 @@ fn fail_to_open_window(e: anyhow::Error, _cx: &mut App) {
 }
 static STARTUP_TIME: OnceLock<Instant> = OnceLock::new();
 
+#[cfg_attr(not(target_os = "windows"), allow(unused_variables))]
+fn perf_mark(name: &str) {
+    #[cfg(target_os = "windows")]
+    gpui_windows::perf_marker::mark(name);
+}
+
 fn main() {
+    perf_mark("main");
     STARTUP_TIME.get_or_init(|| Instant::now());
 
     // If this process was re-executed as a Linux sandbox helper, run that mode
@@ -339,6 +346,7 @@ fn main() {
     #[cfg(windows)]
     check_for_conpty_dll();
 
+    perf_mark("app_build_start");
     let app = build_application()
         .with_assets(Assets)
         .with_restart_arguments(restart_arguments);
@@ -477,7 +485,9 @@ fn main() {
         }
     });
 
+    perf_mark("app_run");
     app.run(move |cx| {
+        perf_mark("run_start");
         cx.set_global(app_db);
         let db_trusted_paths = match workspace::WorkspaceDb::global(cx).fetch_trusted_worktrees() {
             Ok(trusted_paths) => trusted_paths,
@@ -594,9 +604,11 @@ fn main() {
         client::init(&client, cx);
         feature_flags::FeatureFlagStore::init(cx);
 
+        perf_mark("core_init_done");
         let system_id = cx.foreground_executor().block_on(system_id).ok();
         let installation_id = cx.foreground_executor().block_on(installation_id).ok();
         let session = cx.foreground_executor().block_on(session);
+        perf_mark("block_on_done");
 
         let telemetry = client.telemetry();
         telemetry.start(
@@ -668,6 +680,7 @@ fn main() {
             cx,
         );
 
+        perf_mark("theme_init_start");
         theme_settings::init(theme::LoadThemes::All(Box::new(Assets)), cx);
         eager_load_active_theme_and_icon_theme(fs.clone(), cx);
         theme_extension::init(
@@ -725,7 +738,9 @@ fn main() {
         recent_projects::init(cx);
         dev_container::init(cx);
 
+        perf_mark("fonts_start");
         load_embedded_fonts(cx);
+        perf_mark("fonts_done");
         #[cfg(target_os = "linux")]
         prewarm_fonts(cx);
 
@@ -790,6 +805,7 @@ fn main() {
         which_key::init(cx);
         #[cfg(target_os = "windows")]
         etw_tracing::init(cx);
+        perf_mark("feature_inits_done");
 
         cx.observe_global::<SettingsStore>({
             let http = app_state.client.http_client();
@@ -925,6 +941,7 @@ fn main() {
             )
         };
 
+        perf_mark("open_dispatch");
         let restore_task = match open_rx
             .try_recv()
             .ok()
@@ -1297,6 +1314,8 @@ fn handle_open_request(request: OpenRequest, app_state: Arc<AppState>, cx: &mut 
                 cx,
             )
             .await?;
+            #[cfg(target_os = "windows")]
+            gpui_windows::perf_marker::mark_on_next_present("file_ready");
             for result in results.into_iter().flatten() {
                 if let Err(err) = result {
                     log::error!("Error opening path: {err:#}");
