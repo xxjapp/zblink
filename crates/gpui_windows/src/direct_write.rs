@@ -2,12 +2,14 @@ use std::{
     borrow::Cow,
     ffi::{c_uint, c_void},
     mem::ManuallyDrop,
+    sync::atomic::{AtomicBool, Ordering},
+    thread::JoinHandle,
 };
 
-use anyhow::{Context, Result};
+use anyhow::{Context, Result, anyhow};
 use collections::HashMap;
 use gpui_util::{ResultExt, maybe};
-use parking_lot::{RwLock, RwLockUpgradableReadGuard};
+use parking_lot::{Mutex, RwLock, RwLockReadGuard, RwLockUpgradableReadGuard, RwLockWriteGuard};
 use smallvec::SmallVec;
 use windows::{
     Win32::{
@@ -38,7 +40,13 @@ struct FontInfo {
 
 pub(crate) struct DirectWriteTextSystem {
     components: DirectWriteComponents,
+    /// Access only through `read_state` / `write_state` / `upgradable_read_state`, which first
+    /// install the system font collection that is still being built in the background.
     state: RwLock<DirectWriteState>,
+    /// Building the system font set takes tens of milliseconds, so it runs off the main thread
+    /// during startup. Until it is installed, `state.system_font_collection` is a placeholder.
+    pending_system_font_collection: Mutex<Option<JoinHandle<Result<IDWriteFontCollection1>>>>,
+    system_font_collection_installed: AtomicBool,
 }
 
 struct DirectWriteComponents {
@@ -194,13 +202,21 @@ impl DirectWriteTextSystem {
             system_subpixel_rendering,
         };
 
-        let system_font_collection = unsafe {
-            let mut result = None;
-            components
-                .factory
-                .GetSystemFontCollection(false, &mut result, true)?;
-            result.context("Failed to get system font collection")?
-        };
+        let pending_system_font_collection = std::thread::Builder::new()
+            .name("SystemFontCollection".into())
+            .spawn({
+                let factory = components.factory.clone();
+                move || {
+                    let collection = unsafe {
+                        let mut result = None;
+                        factory.GetSystemFontCollection(false, &mut result, true)?;
+                        result.context("Failed to get system font collection")
+                    };
+                    crate::perf_marker::mark("font_collection_done");
+                    collection
+                }
+            })
+            .context("Spawning the system font collection thread")?;
         let custom_font_set = unsafe { components.builder.CreateFontSet()? };
         let custom_font_collection = unsafe {
             components
@@ -212,39 +228,90 @@ impl DirectWriteTextSystem {
             components,
             state: RwLock::new(DirectWriteState {
                 gpu_state,
-                system_font_collection,
+                // Replaced by `install_system_font_collection` before any state access.
+                system_font_collection: custom_font_collection.clone(),
                 custom_font_collection,
                 fonts: Vec::new(),
                 font_to_font_id: HashMap::default(),
                 font_info_cache: HashMap::default(),
                 layout_line_scratch: Vec::new(),
             }),
+            pending_system_font_collection: Mutex::new(Some(pending_system_font_collection)),
+            system_font_collection_installed: AtomicBool::new(false),
         })
+    }
+
+    /// Waits for the system font collection being built in the background and installs it.
+    ///
+    /// # Panics
+    ///
+    /// Panics if it couldn't be built: the platform can't run without system fonts, and callers
+    /// such as `all_font_names` have no way to report the error.
+    pub(crate) fn install_system_font_collection(&self) {
+        if self
+            .system_font_collection_installed
+            .load(Ordering::Acquire)
+        {
+            return;
+        }
+        // Held until the collection is installed, so that concurrent callers wait for it.
+        let mut pending = self.pending_system_font_collection.lock();
+        let Some(handle) = pending.take() else {
+            return;
+        };
+        let collection = handle
+            .join()
+            .map_err(|_| anyhow!("system font collection thread panicked"))
+            .and_then(|result| result)
+            .unwrap_or_else(|error| {
+                panic!(
+                    "failed to initialize Windows platform: Error creating DirectWriteTextSystem: \
+                     {error:#}"
+                )
+            });
+        self.state.write().system_font_collection = collection;
+        self.system_font_collection_installed
+            .store(true, Ordering::Release);
+    }
+
+    fn read_state(&self) -> RwLockReadGuard<'_, DirectWriteState> {
+        self.install_system_font_collection();
+        self.state.read()
+    }
+
+    fn write_state(&self) -> RwLockWriteGuard<'_, DirectWriteState> {
+        self.install_system_font_collection();
+        self.state.write()
+    }
+
+    fn upgradable_read_state(&self) -> RwLockUpgradableReadGuard<'_, DirectWriteState> {
+        self.install_system_font_collection();
+        self.state.upgradable_read()
     }
 
     /// Uses `directx_devices` to rasterize color glyphs, replacing any previous devices, for
     /// example after the device was lost.
     pub(crate) fn handle_gpu_lost(&self, directx_devices: &DirectXDevices) -> Result<()> {
-        self.state.write().handle_gpu_lost(directx_devices)
+        self.write_state().handle_gpu_lost(directx_devices)
     }
 
     /// Releases the GPU state, when the platform switches to headless mode.
     pub(crate) fn release_gpu(&self) {
-        self.state.write().gpu_state = None;
+        self.write_state().gpu_state = None;
     }
 }
 
 impl PlatformTextSystem for DirectWriteTextSystem {
     fn add_fonts(&self, fonts: Vec<Cow<'static, [u8]>>) -> Result<()> {
-        self.state.write().add_fonts(&self.components, fonts)
+        self.write_state().add_fonts(&self.components, fonts)
     }
 
     fn all_font_names(&self) -> Vec<String> {
-        self.state.read().all_font_names(&self.components)
+        self.read_state().all_font_names(&self.components)
     }
 
     fn font_id(&self, font: &Font) -> Result<FontId> {
-        let lock = self.state.upgradable_read();
+        let lock = self.upgradable_read_state();
         if let Some(font_id) = lock.font_to_font_id.get(font) {
             Ok(*font_id)
         } else {
@@ -255,26 +322,26 @@ impl PlatformTextSystem for DirectWriteTextSystem {
     }
 
     fn font_metrics(&self, font_id: FontId) -> FontMetrics {
-        self.state.read().font_metrics(font_id)
+        self.read_state().font_metrics(font_id)
     }
 
     fn typographic_bounds(&self, font_id: FontId, glyph_id: GlyphId) -> Result<Bounds<f32>> {
-        self.state.read().get_typographic_bounds(font_id, glyph_id)
+        self.read_state().get_typographic_bounds(font_id, glyph_id)
     }
 
     fn advance(&self, font_id: FontId, glyph_id: GlyphId) -> anyhow::Result<Size<f32>> {
-        self.state.read().get_advance(font_id, glyph_id)
+        self.read_state().get_advance(font_id, glyph_id)
     }
 
     fn glyph_for_char(&self, font_id: FontId, ch: char) -> Option<GlyphId> {
-        self.state.read().glyph_for_char(font_id, ch)
+        self.read_state().glyph_for_char(font_id, ch)
     }
 
     fn glyph_raster_bounds(
         &self,
         params: &RenderGlyphParams,
     ) -> anyhow::Result<Bounds<DevicePixels>> {
-        self.state.read().raster_bounds(&self.components, params)
+        self.read_state().raster_bounds(&self.components, params)
     }
 
     fn rasterize_glyph(
@@ -282,14 +349,12 @@ impl PlatformTextSystem for DirectWriteTextSystem {
         params: &RenderGlyphParams,
         raster_bounds: Bounds<DevicePixels>,
     ) -> anyhow::Result<(Size<DevicePixels>, Vec<u8>)> {
-        self.state
-            .read()
+        self.read_state()
             .rasterize_glyph(&self.components, params, raster_bounds)
     }
 
     fn layout_line(&self, text: &str, font_size: Pixels, runs: &[FontRun]) -> LineLayout {
-        self.state
-            .write()
+        self.write_state()
             .layout_line(&self.components, text, font_size, runs)
             .log_err()
             .unwrap_or(LineLayout {
