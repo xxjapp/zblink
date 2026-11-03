@@ -1302,7 +1302,7 @@ fn handle_open_request(request: OpenRequest, app_state: Arc<AppState>, cx: &mut 
         task = Some(cx.spawn(async move |cx| {
             let paths_with_position =
                 derive_paths_with_position(app_state.fs.as_ref(), request.open_paths).await;
-            let (_window, results) = open_paths_with_positions(
+            let opened = open_paths_with_positions(
                 &paths_with_position,
                 &request.diff_paths,
                 request.diff_all,
@@ -1313,9 +1313,20 @@ fn handle_open_request(request: OpenRequest, app_state: Arc<AppState>, cx: &mut 
                 },
                 cx,
             )
-            .await?;
-            #[cfg(target_os = "windows")]
-            gpui_windows::perf_marker::mark_on_next_present("file_ready");
+            .await;
+            // The measurement script treats `file_ready` as "the requested files are shown", so it
+            // must not be recorded when any of them failed to open.
+            match &opened {
+                Ok((_, results))
+                    if results.iter().any(Option::is_some)
+                        && results.iter().flatten().all(Result::is_ok) =>
+                {
+                    #[cfg(target_os = "windows")]
+                    gpui_windows::perf_marker::mark_on_next_present("file_ready");
+                }
+                _ => perf_mark("file_open_failed"),
+            }
+            let (_window, results) = opened?;
             for result in results.into_iter().flatten() {
                 if let Err(err) = result {
                     log::error!("Error opening path: {err:#}");
