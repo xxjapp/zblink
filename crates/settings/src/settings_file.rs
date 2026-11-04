@@ -171,6 +171,9 @@ pub fn test_settings() -> &'static str {
                 "auto_update": true,
                 "auto_install_extensions": { "html": true },
                 "telemetry": { "diagnostics": true, "metrics": true },
+                "title_bar": { "show_sign_in": true },
+                "collaboration_panel": { "button": true },
+                "show_call_status_icon": true,
             }),
             &mut value,
         );
