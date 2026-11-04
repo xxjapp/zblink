@@ -1598,10 +1598,20 @@ fn open_about_window(cx: &mut App) {
 
             // zblink: artwork on the right, faded into the theme background behind the text.
             let background = cx.theme().colors().editor_background;
+            // Full version and commit are long; the Copy button still copies them in full.
+            let short_version = match self.full_version.split_once('+') {
+                Some((version, metadata)) => {
+                    let channel = metadata.split('.').next().unwrap_or_default();
+                    SharedString::from(format!("{version}+{channel}"))
+                }
+                None => self.full_version.clone(),
+            };
             let short_commit = self
                 .commit
                 .as_ref()
                 .map(|commit| SharedString::from(commit.chars().take(10).collect::<String>()));
+            let mut details = vec![("Version", short_version)];
+            details.extend(short_commit.map(|commit| ("Commit", commit)));
 
             Navigable::new(
                 v_flex()
@@ -1646,16 +1656,21 @@ fn open_about_window(cx: &mut App) {
                                             .size(LabelSize::Small),
                                     )
                                     .child(
-                                        v_flex()
+                                        h_flex()
                                             .mt_3()
-                                            .gap_1()
-                                            .child(Self::detail_row(
-                                                "Version",
-                                                self.full_version.clone(),
-                                            ))
-                                            .when_some(short_commit, |this, commit| {
-                                                this.child(Self::detail_row("Commit", commit))
-                                            }),
+                                            .gap_4()
+                                            .child(v_flex().gap_1().children(details.iter().map(
+                                                |(label, _)| {
+                                                    Label::new(*label)
+                                                        .color(Color::Muted)
+                                                        .size(LabelSize::Small)
+                                                },
+                                            )))
+                                            .child(v_flex().gap_1().children(details.iter().map(
+                                                |(_, value)| {
+                                                    Label::new(value.clone()).size(LabelSize::Small)
+                                                },
+                                            ))),
                                     ),
                             )
                             .child(self.render_buttons(ok_is_focused, copy_is_focused, cx)),
@@ -1668,19 +1683,6 @@ fn open_about_window(cx: &mut App) {
     }
 
     impl AboutWindow {
-        fn detail_row(label: &'static str, value: SharedString) -> impl IntoElement {
-            h_flex()
-                .gap_4()
-                .child(
-                    div().w_16().child(
-                        Label::new(label)
-                            .color(Color::Muted)
-                            .size(LabelSize::XSmall),
-                    ),
-                )
-                .child(Label::new(value).size(LabelSize::Small))
-        }
-
         fn render_buttons(
             &self,
             ok_is_focused: bool,
