@@ -1,0 +1,36 @@
+# Paths ignored by script/check-zblink-branding (ripgrep globs, relative to crates/).
+# See task-zblink-branding-plan §1.2 for why each group is left unchanged.
+
+# AI: hidden by disable_ai, to be removed as a whole
+crates/agent*/**
+crates/acp*/**
+crates/ai_onboarding/**
+crates/anthropic/**
+crates/cloud_*/**
+crates/copilot*/**
+crates/edit_prediction*/**
+crates/language_model*/**
+crates/language_models/**
+crates/open_ai/**
+crates/zeta*/**
+crates/settings_ui/src/pages/llm_providers_page.rs
+crates/settings_ui/src/pages/edit_prediction_provider_setup.rs
+
+# macOS / Linux only
+crates/zed/src/zed/mac_only_instance.rs
+crates/zed/src/zed/move_to_applications.rs
+crates/gpui_linux/**
+crates/gpui_macos/**
+
+# Release, installer, CLI and update helpers (task-zblink-release-update)
+crates/auto_update_helper/**
+crates/cli/**
+crates/explorer_command_injector/**
+crates/install_cli/**
+
+# Zed server, collaboration and internal tooling
+crates/collab*/**
+crates/client/**
+crates/docs_preprocessor/**
+crates/extension_cli/**
+crates/xtask/**

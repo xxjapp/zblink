@@ -1,0 +1,386 @@
+crates/auto_update/src/auto_update.rs	"failed to copy Zed update from {:?} to {:?}: {:?}",
+crates/auto_update/src/auto_update.rs	"https://github.com/zed-industries/zed/commits/nightly/".to_string()
+crates/auto_update/src/auto_update.rs	"macos" => anyhow::Ok("Zed.dmg"),
+crates/auto_update/src/auto_update.rs	"windows" => Ok("Zed.exe"),
+crates/auto_update/src/auto_update.rs	.context("No parent dir for Zed.exe")?
+crates/auto_update/src/auto_update.rs	ReleaseChannel::Dev => "https://github.com/zed-industries/zed/commits/main/".to_string(),
+crates/auto_update/src/auto_update.rs	let mount_path = temp_dir.path().join("Zed");
+crates/auto_update_ui/src/auto_update_ui.rs	"Made by the Zed team, with the same quality and performance".into(),
+crates/benchmarks/benches/markdown_renderer.rs	markdown.push_str("author: Zed benchmark\n");
+crates/benchmarks/benches/markdown_renderer.rs	markdown.push_str("https://zed.dev/");
+crates/context_server/src/context_server.rs	name: "Zed".to_string(),
+crates/context_server/src/oauth.rs	"client_name": "Zed",
+crates/context_server/src/oauth.rs	"https://zed.dev/oauth/client-metadata.json"
+crates/context_server/src/oauth.rs	"https://zed.dev/oauth/client-metadata.json",
+crates/context_server/src/oauth.rs	assert_eq!(body["client_name"], "Zed");
+crates/context_server/src/oauth.rs	pub const CIMD_URL: &str = "https://zed.dev/oauth/client-metadata.json";
+crates/dap/src/client.rs	client_name: Some("Zed".to_owned()),
+crates/dap/src/transport.rs	"When using the `stdio` transport, the path to a debug adapter binary must be set by Zed."
+crates/dap_adapters/src/go.rs	"zed-industries/delve-shim-dap",
+crates/debugger_ui/src/debugger_panel.rs	.on_click(move |_, _, cx| cx.open_url("https://zed.dev/docs/debugger"))
+crates/debugger_ui/src/debugger_panel.rs	.on_click(|_, _, cx| cx.open_url("https://zed.dev/docs/debugger")),
+crates/debugger_ui/src/new_process_modal.rs	InputField::new(window, cx, "ENV=Zed ~/bin/program --option")
+crates/debugger_ui/src/session/running.rs	anyhow::bail!("Zed cannot determine how to run this debug scenario. `build` field was not provided and Debug Adapter won't accept provided configuration because: {e}");
+crates/editor/src/clipboard.rs	log::warn!("There should always be at least one selection in Zed. This is a bug.");
+crates/editor/src/edit_prediction.rs	cx.open_url("https://zed.dev/docs/completions#edit-predictions-missing-keybinding");
+crates/editor/src/editor.rs	"The remote instance of Zed does not support this yet. It must be upgraded to {}",
+crates/editor/src/hover_links.rs	Let's test a [complex](https://zed.dev/channel/) caseˇ.
+crates/editor/src/hover_links.rs	Let's test a [complex](https://zed.dev/channel/had-(oops)) caseˇ.
+crates/editor/src/hover_links.rs	Let's test a [complex](https://zed.dev/channel/had-(ˇoops)) case.
+crates/editor/src/hover_links.rs	Let's test a [complex](https://zed.dev/channel/ˇ) case.
+crates/editor/src/hover_links.rs	Let's test a [complex](https://zed.dev/channeˇl/) case.
+crates/editor/src/hover_links.rs	Let's test a [complex](«https://zed.dev/channel/had-(oops)ˇ») case.
+crates/editor/src/hover_links.rs	Let's test a [complex](«https://zed.dev/channel/ˇ») case.
+crates/editor/src/hover_links.rs	Some("https://zed.dev/channel/had-(oops)".into())
+crates/editor/src/hover_links.rs	["https://zed.dev/", path!("/root/dir/file2.rs")].map(|target| Some(target.to_owned()))
+crates/editor/src/hover_links.rs	assert_eq!(cx.opened_url(), Some("https://zed.dev/releases".into()));
+crates/editor/src/hover_links.rs	cx.pixel_position(indoc! {"A cool webpage is https://zed.dev/releˇases"});
+crates/editor/src/hover_links.rs	cx.pixel_position(indoc! {"https://zed.dev/relˇeases is a cool webpage."});
+crates/editor/src/hover_links.rs	cx.set_state("https://zed.dev/ˇreleases");
+crates/editor/src/hover_links.rs	cx.set_state(indoc! {"A cool ˇwebpage is https://zed.dev/releases"});
+crates/editor/src/hover_links.rs	cx.set_state(indoc! {"https://zed.dev/releases is a cool ˇwebpage."});
+crates/editor/src/hover_links.rs	for marked in ["hˇttps://zed.dev/", "fˇile2.rs"] {
+crates/editor/src/hover_links.rs	indoc! {"A cool webpage is «https://zed.dev/releasesˇ»"},
+crates/editor/src/hover_links.rs	indoc! {"«https://zed.dev/releasesˇ» is a cool webpage."},
+crates/etw_tracing/etw_tracing.rs	<WindowsPerformanceRecorder Version="1.0" Author="Zed Industries">
+crates/etw_tracing/etw_tracing.rs	const INSTANCE_NAME: &str = "Zed";
+crates/etw_tracing/etw_tracing.rs	recv_json(&mut BufReader::new(&mut *stream)).context("Receive command from Zed")?;
+crates/eval_cli/src/headless.rs	"Zed Agent CLI/{} ({}; {})",
+crates/eval_cli/src/main.rs	about = "Run Zed's agent headlessly in evaluation/benchmark environments"
+crates/extension_host/benches/extension_compilation_benchmark.rs	"Zed Extension CLI/{} ({}; {})",
+crates/extension_host/src/wasm_host/wit.rs	"unreleased versions of the extension API can only be used on development builds of Zed"
+crates/extension_suggest/src/extension_suggest.rs	docs_url: "https://zed.dev/docs/languages/emmet",
+crates/extensions_ui/src/components/extension_card.rs	authors: vec!["Zed Industries".to_owned()],
+crates/extensions_ui/src/components/extension_card.rs	repository: "https://github.com/zed-industries/zed".to_owned(),
+crates/extensions_ui/src/components/extension_card.rs	repository: Some("https://github.com/zed-industries/zed".to_owned()),
+crates/extensions_ui/src/extensions_ui.rs	"Claude Agent support is built-in to Zed!",
+crates/extensions_ui/src/extensions_ui.rs	"Codex CLI support is built-in to Zed!",
+crates/extensions_ui/src/extensions_ui.rs	"Gemini CLI support is built-in to Zed!",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/ai/external-agents#claude-agent",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/ai/external-agents#codex-cli",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/ai/external-agents#gemini-cli",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/git",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/git#git-integrations",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/bash",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/c",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/cpp",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/go",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/python",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/python#basedpyright",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/python#code-formatting--linting",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/rust",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/tailwindcss",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/languages/typescript",
+crates/extensions_ui/src/extensions_ui.rs	"https://zed.dev/docs/vim",
+crates/git/src/repository.rs	"https://github.com/zed-industries/zed.git"
+crates/git/src/repository.rs	"https://github.com/zed-industries/zed.git",
+crates/git/src/repository.rs	"origin\thttps://github.com/zed-industries/zed.git (fetch) [blob:none]\n",
+crates/git/src/repository.rs	"origin\thttps://github.com/zed-industries/zed.git (push)\n",
+crates/git/src/repository.rs	("GIT_AUTHOR_EMAIL".to_string(), "hi@zed.dev".to_string()),
+crates/git/src/repository.rs	("GIT_AUTHOR_NAME".to_string(), "Zed".to_string()),
+crates/git/src/repository.rs	("GIT_COMMITTER_EMAIL".to_string(), "hi@zed.dev".to_string()),
+crates/git/src/repository.rs	("GIT_COMMITTER_NAME".to_string(), "Zed".to_string()),
+crates/git/src/repository.rs	.env("GIT_AUTHOR_EMAIL", "test@zed.dev")
+crates/git/src/repository.rs	.env("GIT_COMMITTER_EMAIL", "test@zed.dev")
+crates/git/src/repository.rs	Some("https://github.com/zed-industries/zed.git")
+crates/git/src/repository.rs	author_name: SharedString::new_static("Zed"),
+crates/git_hosting_providers/src/git_hosting_providers.rs	"git@github.com:zed-industries/zed.git",
+crates/git_hosting_providers/src/git_hosting_providers.rs	"git@my.super.long.subdomain.com:zed-industries/zed.git",
+crates/git_hosting_providers/src/providers/bitbucket.rs	"https://bitbucket.company.com/projects/zed-industries/repos/zed/compare/commits?sourceBranch=refs%2Fheads%2Ffeature%2Fmy-branch"
+crates/git_hosting_providers/src/providers/bitbucket.rs	"https://bitbucket.company.com/projects/zed-industries/repos/zed/pull-requests/123"
+crates/git_hosting_providers/src/providers/bitbucket.rs	"https://bitbucket.org/zed-industries/zed/pull-requests/123"
+crates/git_hosting_providers/src/providers/bitbucket.rs	"https://bitbucket.org/zed-industries/zed/pull-requests/new?source=feature%2Fmy-branch"
+crates/git_hosting_providers/src/providers/bitbucket.rs	"https://bitbucket.org/zed-industries/zed/src/f00b4r/main.rs#lines-24:48";
+crates/git_hosting_providers/src/providers/bitbucket.rs	.parse_remote_url("git@bitbucket.org:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/bitbucket.rs	.parse_remote_url("https://bitbucket.org/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/bitbucket.rs	.parse_remote_url("https://thorstenballzed@bitbucket.org/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/bitbucket.rs	Bitbucket::from_remote_url("git@bitbucket.company.com:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/bitbucket.rs	Bitbucket::from_remote_url("https://bitbucket.company.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/bitbucket.rs	let expected_url = "https://bitbucket.company.com/projects/zed-industries/repos/zed/browse/main.rs?at=f00b4r";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let expected_url = "https://bitbucket.company.com/projects/zed-industries/repos/zed/browse/main.rs?at=f00b4r#24-48";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let expected_url = "https://bitbucket.company.com/projects/zed-industries/repos/zed/browse/main.rs?at=f00b4r#7";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let expected_url = "https://bitbucket.org/zed-industries/zed/src/f00b4r/main.rs";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let expected_url = "https://bitbucket.org/zed-industries/zed/src/f00b4r/main.rs#lines-7";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let remote_url = "git@bitbucket.company.com:zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let remote_url = "https://bitbucket.company.com/scm/zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let remote_url = "https://bitbucket.company.com/zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/bitbucket.rs	let remote_url = "https://thorstenballzed@bitbucket.company.com/zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/bitbucket.rs	owner: "zed-industries".into(),
+crates/git_hosting_providers/src/providers/forgejo.rs	"https://codeberg.org/zed-industries/zed/compare/feature/new-feature"
+crates/git_hosting_providers/src/providers/forgejo.rs	.parse_remote_url("git@codeberg.org:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/forgejo.rs	.parse_remote_url("https://codeberg.org/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/forgejo.rs	Forgejo::from_remote_url("git@forgejo.some-enterprise.com:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/forgejo.rs	Forgejo::from_remote_url("https://forgejo-instance.big-co.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/forgejo.rs	let expected_url = "https://codeberg.org/zed-industries/zed/src/commit/faa6f979be417239b2e070dbbf6392b909224e0b/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/forgejo.rs	let expected_url = "https://codeberg.org/zed-industries/zed/src/commit/faa6f979be417239b2e070dbbf6392b909224e0b/crates/editor/src/git/permalink.rs#L24-L48";
+crates/git_hosting_providers/src/providers/forgejo.rs	let expected_url = "https://codeberg.org/zed-industries/zed/src/commit/faa6f979be417239b2e070dbbf6392b909224e0b/crates/editor/src/git/permalink.rs#L7";
+crates/git_hosting_providers/src/providers/forgejo.rs	let expected_url = "https://forgejo-instance.big-co.com/zed-industries/zed/src/commit/b2efec9824c45fcc90c9a7eb107a50d1772a60aa/crates/zed/src/main.rs";
+crates/git_hosting_providers/src/providers/forgejo.rs	let expected_url = "https://forgejo.some-enterprise.com/zed-industries/zed/src/commit/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/forgejo.rs	let remote_url = "git@forgejo.my-enterprise.com:zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/forgejo.rs	let remote_url = "https://forgejo.my-enterprise.com/zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/forgejo.rs	owner: "zed-industries".into(),
+crates/git_hosting_providers/src/providers/gitea.rs	.parse_remote_url("git@gitea.com:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitea.rs	.parse_remote_url("https://gitea.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitea.rs	Gitea::from_remote_url("git@gitea.some-enterprise.com:zed-industries/zed.git").unwrap();
+crates/git_hosting_providers/src/providers/gitea.rs	Gitea::from_remote_url("https://gitea-instance.big-co.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitea.rs	let expected_url = "https://gitea-instance.big-co.com/zed-industries/zed/src/commit/b2efec9824c45fcc90c9a7eb107a50d1772a60aa/crates/zed/src/main.rs";
+crates/git_hosting_providers/src/providers/gitea.rs	let expected_url = "https://gitea.com/zed-industries/zed/src/commit/faa6f979be417239b2e070dbbf6392b909224e0b/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/gitea.rs	let expected_url = "https://gitea.com/zed-industries/zed/src/commit/faa6f979be417239b2e070dbbf6392b909224e0b/crates/editor/src/git/permalink.rs#L24-L48";
+crates/git_hosting_providers/src/providers/gitea.rs	let expected_url = "https://gitea.com/zed-industries/zed/src/commit/faa6f979be417239b2e070dbbf6392b909224e0b/crates/editor/src/git/permalink.rs#L7";
+crates/git_hosting_providers/src/providers/gitea.rs	let expected_url = "https://gitea.some-enterprise.com/zed-industries/zed/src/commit/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/gitea.rs	let remote_url = "git@gitea.my-enterprise.com:zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/gitea.rs	let remote_url = "https://gitea.my-enterprise.com/zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/gitea.rs	owner: "zed-industries".into(),
+crates/git_hosting_providers/src/providers/gitee.rs	.parse_remote_url("git@gitee.com:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitee.rs	.parse_remote_url("https://gitee.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitee.rs	let expected_url = "https://gitee.com/zed-industries/zed/blob/e5fe811d7ad0fc26934edd76f891d20bdc3bb194/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/gitee.rs	let expected_url = "https://gitee.com/zed-industries/zed/blob/e5fe811d7ad0fc26934edd76f891d20bdc3bb194/crates/editor/src/git/permalink.rs#L24-48";
+crates/git_hosting_providers/src/providers/gitee.rs	let expected_url = "https://gitee.com/zed-industries/zed/blob/e5fe811d7ad0fc26934edd76f891d20bdc3bb194/crates/editor/src/git/permalink.rs#L7";
+crates/git_hosting_providers/src/providers/gitee.rs	owner: "zed-industries".into(),
+crates/git_hosting_providers/src/providers/github.rs	"https://github.com/zed-industries/zed/pull/10687"
+crates/git_hosting_providers/src/providers/github.rs	"https://github.com/zed-industries/zed/pull/new/feature%2Fnew-feature"
+crates/git_hosting_providers/src/providers/github.rs	"https://github.com/zed-industries/zed/pull/new/feature%2Fsomething%20cool"
+crates/git_hosting_providers/src/providers/github.rs	"https://github.zed.com/zed-industries/zed/pull/new/feature%2Fnew-feature"
+crates/git_hosting_providers/src/providers/github.rs	.parse_remote_url("git@github.com:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/github.rs	.parse_remote_url("https://github.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/github.rs	let expected_url = "https://github.com/zed-industries/nonexistent/blob/3ef1539900037dd3601be7149b2b39ed6d0ce3db/app/blog/%5Bslug%5D/page.tsx#L8";
+crates/git_hosting_providers/src/providers/github.rs	let expected_url = "https://github.com/zed-industries/zed/blob/b2efec9824c45fcc90c9a7eb107a50d1772a60aa/crates/zed/src/main.rs";
+crates/git_hosting_providers/src/providers/github.rs	let expected_url = "https://github.com/zed-industries/zed/blob/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/github.rs	let expected_url = "https://github.com/zed-industries/zed/blob/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs#L24-L48";
+crates/git_hosting_providers/src/providers/github.rs	let expected_url = "https://github.com/zed-industries/zed/blob/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs#L7";
+crates/git_hosting_providers/src/providers/github.rs	let remote_url = "git@github.com:/zed-industries/zed";
+crates/git_hosting_providers/src/providers/github.rs	let remote_url = "git@github.com:zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/github.rs	let remote_url = "git@github.my-enterprise.com:zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/github.rs	let remote_url = "https://github.my-enterprise.com/zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/github.rs	owner: "zed-industries".into(),
+crates/git_hosting_providers/src/providers/gitlab.rs	"Merge branch 'feature' into 'main'\n\nSee merge request zed-industries/zed!789";
+crates/git_hosting_providers/src/providers/gitlab.rs	"https://gitlab.com/zed-industries/zed/-/merge_requests/456"
+crates/git_hosting_providers/src/providers/gitlab.rs	"https://gitlab.com/zed-industries/zed/-/merge_requests/789"
+crates/git_hosting_providers/src/providers/gitlab.rs	"https://gitlab.com/zed-industries/zed/-/merge_requests/new?merge_request%5Bsource_branch%5D=feature%2Fcool%20stuff"
+crates/git_hosting_providers/src/providers/gitlab.rs	"https://gitlab.com/zed-industries/zed/-/merge_requests/new?merge_request%5Bsource_branch%5D=feature%2Fnew-feature"
+crates/git_hosting_providers/src/providers/gitlab.rs	"https://gitlab.zed.com/zed-industries/zed/-/merge_requests/new?merge_request%5Bsource_branch%5D=feature%2Fnew-feature"
+crates/git_hosting_providers/src/providers/gitlab.rs	.parse_remote_url("git@gitlab.com:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitlab.rs	.parse_remote_url("https://gitlab.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitlab.rs	Gitlab::from_remote_url("git@gitlab.some-enterprise.com:zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitlab.rs	Gitlab::from_remote_url("https://gitlab-instance.big-co.com/zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/gitlab.rs	let expected_url = "https://gitlab-instance.big-co.com/zed-industries/zed/-/blob/b2efec9824c45fcc90c9a7eb107a50d1772a60aa/crates/zed/src/main.rs";
+crates/git_hosting_providers/src/providers/gitlab.rs	let expected_url = "https://gitlab.com/zed-industries/zed/-/blob/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/gitlab.rs	let expected_url = "https://gitlab.com/zed-industries/zed/-/blob/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs#L24-48";
+crates/git_hosting_providers/src/providers/gitlab.rs	let expected_url = "https://gitlab.com/zed-industries/zed/-/blob/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs#L7";
+crates/git_hosting_providers/src/providers/gitlab.rs	let expected_url = "https://gitlab.some-enterprise.com/zed-industries/zed/-/blob/e6ebe7974deb6bb6cc0e2595c8ec31f0c71084b7/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/gitlab.rs	let remote_url = "git@gitlab.my-enterprise.com:zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/gitlab.rs	let remote_url = "https://gitlab.com/zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/gitlab.rs	owner: "zed-industries".into(),
+crates/git_hosting_providers/src/providers/sourcehut.rs	.parse_remote_url("git@git.sr.ht:~zed-industries/zed")
+crates/git_hosting_providers/src/providers/sourcehut.rs	.parse_remote_url("git@git.sr.ht:~zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/sourcehut.rs	.parse_remote_url("https://git.sr.ht/~zed-industries/zed")
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://git.sr.ht/~zed-industries/zed.git/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://git.sr.ht/~zed-industries/zed/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://git.sr.ht/~zed-industries/zed/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs#L24-48";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://git.sr.ht/~zed-industries/zed/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs#L7";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://sourcehut.org/~zed-industries/zed.git/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://sourcehut.org/~zed-industries/zed/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://sourcehut.org/~zed-industries/zed/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs#L24-48";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let expected_url = "https://sourcehut.org/~zed-industries/zed/tree/faa6f979be417239b2e070dbbf6392b909224e0b/item/crates/editor/src/git/permalink.rs#L7";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let permalink = SourceHut::from_remote_url("https://sourcehut.org/~zed-industries/zed")
+crates/git_hosting_providers/src/providers/sourcehut.rs	let permalink = SourceHut::from_remote_url("https://sourcehut.org/~zed-industries/zed.git")
+crates/git_hosting_providers/src/providers/sourcehut.rs	let remote_url = "git@sourcehut.org:~zed-industries/zed";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let remote_url = "git@sourcehut.org:~zed-industries/zed.git";
+crates/git_hosting_providers/src/providers/sourcehut.rs	let remote_url = "https://sourcehut.org/~zed-industries/zed";
+crates/git_hosting_providers/src/providers/sourcehut.rs	owner: "zed-industries".into(),
+crates/git_ui/src/git_panel.rs	SharedString::from("zed-industries-community-examples"),
+crates/git_ui/src/text_diff_view.rs	log::warn!("There should always be at least one selection in Zed. This is a bug.");
+crates/github_releases/src/releases.rs	github_api_request("https://api.github.com/repos/zed-industries/zed/releases").unwrap();
+crates/gpui/src/text_system.rs	".ZedMono" | "Zed Plex Mono" => "Lilex",
+crates/gpui/src/text_system.rs	".ZedMono" | "Zed Plex Mono" => const { &SharedString::new_static("Lilex") },
+crates/gpui/src/text_system.rs	".ZedSans" | "Zed Plex Sans" => "IBM Plex Sans",
+crates/gpui/src/text_system.rs	".ZedSans" | "Zed Plex Sans" => const { &SharedString::new_static("IBM Plex Sans") },
+crates/gpui_wgpu/src/wgpu_renderer.rs	https://github.com/zed-industries/zed/issues",
+crates/gpui_windows/src/platform.rs	OsStr::new(r#""--user-data-dir" "C:\Zed Data""#)
+crates/gpui_windows/src/platform.rs	OsString::from(r"C:\Zed Data"),
+crates/gpui_windows/src/platform.rs	const PLATFORM_WINDOW_CLASS_NAME: PCWSTR = w!("Zed::PlatformWindow");
+crates/gpui_windows/src/window.rs	const WINDOW_CLASS_NAME: PCWSTR = w!("Zed::Window");
+crates/http_client/src/http_client.rs	"https://staging.zed.dev" => "https://api-staging.zed.dev",
+crates/http_client/src/http_client.rs	"https://staging.zed.dev" => "https://cloud.zed.dev",
+crates/http_client/src/http_client.rs	"https://staging.zed.dev" => "https://llm-staging.zed.dev",
+crates/http_client/src/http_client.rs	"https://zed.dev" => "https://api.zed.dev",
+crates/http_client/src/http_client.rs	"https://zed.dev" => "https://cloud.zed.dev",
+crates/inspector_ui/src/inspector.rs	.tooltip(Tooltip::text("Click to open by running Zed CLI"))
+crates/keymap_editor/src/keymap_editor.rs	.context("Failed to load Zed Keybind Context language")
+crates/keymap_editor/src/keymap_editor.rs	.language_for_name("Zed Keybind Context")
+crates/keymap_editor/src/keymap_editor.rs	name: "Zed Keybind Context".into(),
+crates/language_onboarding/src/python.rs	cx.open_url("https://zed.dev/docs/languages/python")
+crates/language_tools/src/key_context_view.rs	.child(Label::new("This view lets you determine the current context stack for creating custom key bindings in Zed. When a keyboard shortcut is triggered, it also shows all the possible contexts it could have triggered in, and which one matched."))
+crates/language_tools/src/key_context_view.rs	.on_click(|_, _, cx| cx.open_url("https://zed.dev/docs/key-bindings")),
+crates/language_tools/src/lsp_button.rs	"C:\\Users\\Zed\\languages\\basedpyright\\node_modules/basedpyright/langserver.index.js".into(),
+crates/language_tools/src/lsp_button.rs	"C:\\Users\\Zed\\languages\\basedpyright\\node_modules\\basedpyright\\langserver.index.js (node)"
+crates/languages/src/json.rs	"zed-industries/package-version-server",
+crates/markdown/src/markdown.rs	"* Here is a list item:\n  ```bash\n  echo \"Zed is awesome!\"\n  ```",
+crates/markdown/src/markdown.rs	"> * Indentation plus quote:\n>   ```bash\n>   echo \"Zed is awesome!\"\n>   ```",
+crates/markdown/src/markdown.rs	"> Level 1\n> > Level 2\n> > ```bash\n> > echo \"Zed is awesome!\"\n> > ```",
+crates/markdown/src/markdown.rs	"> [!NOTE]\n> This is a note containing code:\n> ```bash\n> echo \"Zed is awesome!\"\n> ```",
+crates/markdown/src/markdown.rs	"> ```bash\n> echo \"Zed is awesome!\"\n",
+crates/markdown/src/markdown.rs	"> ```bash\n> echo \"Zed is awesome!\"\n> ```",
+crates/markdown/src/markdown.rs	"[https://zed.dev/docs/über/条件/🙂/markdown/preview/tables/wrapped-links](https://zed.dev/docs/markdown/unicode)",
+crates/markdown/src/markdown.rs	"before [https://zed.dev/docs/markdown/preview/tables/wrapped-link-hit-testing-and-selection](https://zed.dev/docs/markdown/links) after",
+crates/markdown/src/markdown.rs	"echo \"Zed is awesome!\"\n",
+crates/markdown/src/markdown.rs	"https://zed.dev/docs/editor/appearance/themes/configuring-editor-colors",
+crates/markdown/src/markdown.rs	"https://zed.dev/docs/markdown/preview/tables/wrapped-link-hit-testing-and-selection",
+crates/markdown/src/markdown.rs	assert_eq!(alt_text("![Zed *logo*](logo.png)"), Some("Zed logo".into()));
+crates/markdown/src/markdown.rs	assert_eq!(alt_text("![Zed logo](logo.png)"), Some("Zed logo".into()));
+crates/markdown/src/markdown.rs	let source = "a[f](https://zed.dev)i b";
+crates/markdown/src/markdown.rs	let source = "~~[struck](https://zed.dev) through~~";
+crates/markdown/src/markdown.rs	r#"<p style="text-align: center"><a href="https://zed.dev"><img src="icon.png"></a></p>"#,
+crates/markdown/src/markdown.rs	| 1 | [https://zed.dev/docs/markdown/preview/tables/wrapped-link-hit-testing-and-selection](https://zed.dev/docs/markdown/preview/tables/wrapped-link-hit-testing-and-selection) |
+crates/markdown/src/markdown.rs	| 2 | [https://zed.dev/docs/editor/appearance/themes/configuring-editor-colors](https://zed.dev/docs/editor/appearance/themes/configuring-editor-colors) |
+crates/markdown/src/mermaid.rs	super::mermaid_font_family("Zed Plex Sans"),
+crates/markdown/src/parser.rs	"---\ntitle: Post\nauthor: Zed\n---\nBody",
+crates/markdown/src/parser.rs	assert_eq!(pairs, vec![("title", "Post"), ("author", "Zed")]);
+crates/markdown/src/parser.rs	let source = "title: Post\nauthor: Zed\n";
+crates/markdown/src/parser.rs	parse_markdown_with_options("---\nurl: https://zed.dev\n---\nBody", false, false, true);
+crates/migrator/src/migrator.rs	"code_font_family": "Zed Mono",
+crates/migrator/src/migrator.rs	"font_family": "Zed Sans",
+crates/migrator/src/migrator.rs	"markdown_preview_code_font_family": "Zed Mono",
+crates/migrator/src/migrator.rs	"markdown_preview_font_family": "Zed Sans",
+crates/migrator/src/migrator.rs	"provider": "zed.dev",
+crates/node_runtime/src/node_runtime.rs	"Zed managed Node.js binary at {} failed check with output: {:?}",
+crates/node_runtime/src/node_runtime.rs	"using Zed managed Node.js at {} since {}",
+crates/oauth_callback_server/src/oauth_callback_server.rs	"Something went wrong. Please try again from Zed.",
+crates/oauth_callback_server/src/oauth_callback_server.rs	"You can close this tab and return to Zed.",
+crates/onboarding/src/basics_page.rs	"Help fix Zed by sending crash reports so we can fix critical issues fast"
+crates/onboarding/src/basics_page.rs	.name("Zed Agent")
+crates/onboarding/src/basics_page.rs	Some("Help improve Zed by sending anonymous usage data".into()),
+crates/onboarding/src/basics_page.rs	ToggleButtonWithIcon::new("Zed", IconName::AiZed, |_, _, cx| {
+crates/onboarding/src/basics_page.rs	telemetry::event!("Welcome Zed Agent Sign In Clicked");
+crates/onboarding/src/multibuffer_hint.rs	cx.open_url("https://zed.dev/docs/multibuffers")
+crates/open_router/src/open_router.rs	.header("HTTP-Referer", "https://zed.dev")
+crates/open_router/src/open_router.rs	assert_eq!(headers["http-referer"], "https://zed.dev");
+crates/open_router/src/open_router.rs	const OPEN_ROUTER_APP_TITLE: &str = "Zed";
+crates/open_router/src/open_router.rs	http::HeaderValue::from_static("https://zed.dev"),
+crates/project/src/debugger/dap_command.rs	client_name: Some("Zed".to_owned()),
+crates/project/src/debugger/session.rs	const PACKAGE_NAME: &str = "@zed-industries/js-debug-companion-cli";
+crates/project/src/git_store.rs	"https://github.com/zed-industries/zed.git",
+crates/project/src/git_store.rs	&format!("https://github.com/zed-industries/zed/blob/{sha}/src/main.rs")
+crates/project/src/project.rs	url: "https://zed.dev/docs/tasks",
+crates/project/src/project_settings.rs	"converting VSCode debug tasks into Zed ones, file {abs_path:?}"
+crates/project/src/project_settings.rs	"converting VSCode tasks into Zed ones, file {abs_path:?}"
+crates/project/src/project_settings.rs	"serializing Zed tasks into JSON, file {abs_path:?}"
+crates/recent_projects/src/remote_servers.rs	"https://zed.dev/docs/remote-development",
+crates/recent_projects/src/remote_servers.rs	.child(Label::new("Open Zed Log"))
+crates/release_channel/src/lib.rs	"https://zed.dev/docs/nightly/settings"
+crates/release_channel/src/lib.rs	"https://zed.dev/docs/preview/settings"
+crates/release_channel/src/lib.rs	"https://zed.dev/docs/settings"
+crates/release_channel/src/lib.rs	ReleaseChannel::Dev => "dev.zed.Zed-Dev",
+crates/release_channel/src/lib.rs	ReleaseChannel::Nightly => "dev.zed.Zed-Nightly",
+crates/release_channel/src/lib.rs	ReleaseChannel::Preview => "dev.zed.Zed-Preview",
+crates/release_channel/src/lib.rs	ReleaseChannel::Stable => "dev.zed.Zed",
+crates/release_channel/src/lib.rs	const ZED_DOCS_URL: &str = "https://zed.dev/docs";
+crates/remote/src/transport.rs	"Prebuilt remote servers are not yet available for {arch:?}. See https://zed.dev/docs/remote-development"
+crates/remote/src/transport.rs	"Prebuilt remote servers are not yet available for {os:?}. See https://zed.dev/docs/remote-development"
+crates/remote/src/transport/ssh.rs	"/tmp/Zed Repro/remote_server",
+crates/remote/src/transport/ssh.rs	"Prebuilt remote servers are not yet available for windows-{architecture}. See https://zed.dev/docs/remote-development"
+crates/remote/src/transport/ssh.rs	"Prebuilt remote servers are not yet available for windows-{arch}. See https://zed.dev/docs/remote-development"
+crates/remote/src/transport/ssh.rs	"put \"/tmp/Zed Repro/remote_server\" \".zed_server/downloaded server\"\n"
+crates/remote/src/transport/ssh.rs	"put \"/tmp/Zed \\\"Nightly\\\"/remote_server\" \".zed_server/remote_server\"\n"
+crates/remote/src/transport/ssh.rs	"put \"C:\\\\Users\\\\Smit\\\\Zed Repro\\\\remote_server\" \".zed_server/remote_server\"\n"
+crates/remote/src/transport/ssh.rs	r"C:\Users\Smit\Zed Repro\remote_server",
+crates/remote/src/transport/ssh.rs	r#"/tmp/Zed "Nightly"/remote_server"#,
+crates/remote_server/src/server.rs	"Zed-Server/{} ({}; {})",
+crates/repl/src/kernels/remote_kernels.rs	"Zed/{} ({}; {})",
+crates/repl/src/repl.rs	pub const KERNEL_DOCS_URL: &str = "https://zed.dev/docs/repl#changing-kernels";
+crates/repl/src/repl_sessions_ui.rs	"https://zed.dev/docs/repl#language-specific-instructions",
+crates/sandbox/src/linux_bubblewrap.rs	"the only available `bwrap` is setuid-root, which Zed refuses to run"
+crates/sandbox/src/sandbox.rs	"the only available `bwrap` is setuid-root, which Zed refuses to run"
+crates/sandbox/src/sandbox.rs	assert!(!upstream.bypasses("zed.dev", 443));
+crates/sandbox/src/windows_wsl.rs	"/mnt/c/Users/me/AppData/Roaming/Zed/AGENTS.md"
+crates/sandbox/src/windows_wsl.rs	"/mnt/c/Users/me/AppData/Roaming/Zed/AGENTS.md",
+crates/sandbox/src/windows_wsl.rs	&["/mnt/c/Users/me/AppData/Roaming/Zed/AGENTS.md".to_string()],
+crates/sandbox/src/windows_wsl.rs	url="https://cloud.zed.dev/releases/$channel/$version/download?asset=zed&arch=$arch&os=linux&source=zed-wsl-sandbox"
+crates/settings/src/base_keymap_setting.rs	("Zed (Default)", Self::Zed),
+crates/settings/src/base_keymap_setting.rs	BaseKeymap::Zed => write!(f, "Zed"),
+crates/settings/src/keymap_file.rs	"context": "Zed > Editor && some_condition = true",
+crates/settings/src/keymap_file.rs	context: Some("Zed > Editor && some_condition = true"),
+crates/settings/src/settings_store.rs	"Zed Plex Mono",
+crates/settings/src/settings_store.rs	"Zed Plex Sans",
+crates/settings/src/settings_store.rs	font_names: &["Zed Mono".to_string()],
+crates/settings/src/settings_store.rs	icon_theme_names: &["Zed Icons".into()],
+crates/settings_content/src/agent.rs	"zed.dev"
+crates/settings_content/src/language.rs	EditPredictionProvider::Zed => Some("Zed AI"),
+crates/settings_content/src/language_model.rs	#[serde(rename = "zed.dev")]
+crates/settings_content/src/settings_content.rs	"Zed",
+crates/settings_ui/src/page_data.rs	description: "(Linux only) whether Zed or your compositor should draw window decorations.",
+crates/settings_ui/src/page_data.rs	description: "Command to automatically run when Zed creates a Terminal Thread shell in the agent panel. Runs in your configured shell.",
+crates/settings_ui/src/page_data.rs	description: "Controls whether Zed may collect training data when using Zed's Edit Predictions. Data is only collected for files in projects detected as open source. The default value uses the preference previously set via the status-bar toggle, or false if no preference has been stored.",
+crates/settings_ui/src/page_data.rs	description: "Send anonymized usage data like what languages you're using Zed with.",
+crates/settings_ui/src/page_data.rs	description: "The URL of the Zed server to connect to.",
+crates/settings_ui/src/page_data.rs	description: "Use LSP tasks over Zed language extension tasks.",
+crates/settings_ui/src/page_data.rs	description: Some("Set up different edit prediction providers in complement to Zed's built-in Zeta model.".into()),
+crates/settings_ui/src/page_data.rs	placeholder: Some("https://zed.dev"),
+crates/settings_ui/src/pages/sandbox_settings.rs	"Wrap agent-run terminal commands in an OS-level sandbox. When off, commands run with Zed's own permissions."
+crates/settings_ui/src/pages/tool_permissions_setup.rs	const SETTINGS_DISCLAIMER: &str = "Note: custom tool permissions only apply to the Zed native agent and don’t extend to external agents connected through the Agent Client Protocol (ACP).";
+crates/settings_ui/src/settings_ui.rs	.filter(|name| name.as_ref() != "Zed Keybind Context")
+crates/sidebar/src/sidebar.rs	"Import threads from agents like Claude Agent, Codex, and more, whether started in Zed or another client.",
+crates/system_specs/src/system_specs.rs	"Zed: v{} ({}) {}{}",
+crates/task/src/task_template.rs	"If any of the Zed task variables is not substituted, the task should not be resolved, but got some resolution without the variable {removed_variable:?} (index {i})"
+crates/task/src/vscode_debug_format.rs	let zed = DebugTaskFile::try_from(parsed).expect("converting to Zed debug templates");
+crates/terminal/src/alacritty/hyperlinks.rs	"https://github.com/zed-industries/zed",
+crates/terminal/src/alacritty/hyperlinks.rs	"https://github.com/zed-industries/zed.",
+crates/terminal/src/terminal.rs	b"Visit https://zed.dev/ for more\r\nThis is another line\r\n",
+crates/terminal/src/terminal.rs	const OUTPUT_ZED_DEV: &str = "Visit https://zed.dev/ for more";
+crates/terminal/src/terminal.rs	const ZED_DEV_STR: &str = "https://zed.dev/";
+crates/terminal/src/terminal.rs	let terminal = init_terminal_test(cx, b"Visit https://zed.dev/ for more\r\n");
+crates/theme/src/fallback_themes.rs	name: "Zed Default".into(),
+crates/theme/src/icon_theme.rs	pub const DEFAULT_ICON_THEME_NAME: &str = "Zed (Default)";
+crates/theme_importer/src/main.rs	const ZED_THEME_SCHEMA_URL: &str = "https://zed.dev/schema/themes/v0.2.0.json";
+crates/theme_selector/src/icon_theme_selector.rs	cx.open_url("https://zed.dev/docs/icon-themes");
+crates/theme_selector/src/theme_selector.rs	cx.open_url("https://zed.dev/docs/themes");
+crates/title_bar/src/application_menu.rs	Menu::new("Zed").items([MenuItem::action(
+crates/title_bar/src/application_menu.rs	menu_entry(&app_menu.entries, "Zed").handle.clone()
+crates/ui/src/components/ai/agent_setup_button.rs	.name("Zed Agent")
+crates/ui/src/components/button/button_link.rs	ButtonLink::new("zed.dev", "https://zed.dev").into_any_element(),
+crates/ui/src/components/collab/collab_notification.rs	"a_very_long_username_that_might_overflow is sharing a project in Zed:",
+crates/ui/src/components/collab/collab_notification.rs	Label::new("zed-cloud, zed, edit-prediction-bench, zed.dev")
+crates/ui/src/components/collab/update_button.rs	Self::new(IconName::Download, "Downloading Zed Update…")
+crates/ui/src/components/collab/update_button.rs	Self::new(IconName::LoadCircle, "Checking for Zed Updates…")
+crates/ui/src/components/collab/update_button.rs	Self::new(IconName::LoadCircle, "Installing Zed Update…")
+crates/ui/src/components/image.rs	"Zed X Copilot",
+crates/ui/src/components/label/label.rs	single_example("Large", Label::new("Welcome to Zed").size(LabelSize::Large).into_any_element()),
+crates/ui/src/components/list/list_bullet_item.rs	.child(ButtonLink::new("visiting the website", "https://zed.dev"))
+crates/ui/src/components/list/list_bullet_item.rs	.child(Label::new("Create a Zed account by"))
+crates/ui/src/components/notification/announcement_toast.rs	"Mix and match Zed's agent with any ACP-compatible agent",
+crates/util/src/util.rs	.context("Failed to shell-escape Zed executable path.")
+crates/vim/src/surrounds.rs	cx.assert_state(indoc! {"(ˇ(Zed))"}, Mode::Normal);
+crates/vim/src/surrounds.rs	cx.assert_state(indoc! {"(ˇ{ name: 'Zed' })"}, Mode::Normal);
+crates/vim/src/surrounds.rs	cx.set_state(indoc! {"(< name: ˇ'Zed' >)"}, Mode::Normal);
+crates/web_search_providers/src/cloud.rs	pub const ZED_WEB_SEARCH_PROVIDER_ID: &str = "zed.dev";
+crates/windows_resources/src/windows_resources.rs	VALUE "LegalCopyright", "Copyright © zblink contributors. Based on Zed, Copyright 2022 - 2025 Zed Industries, Inc.\0"
+crates/workspace/src/notifications.rs	"An update is required to continue using Zed AI.".into()
+crates/workspace/src/notifications.rs	"https://zed.dev/docs/linux#i-cant-open-any-files",
+crates/workspace/src/notifications.rs	ErrorAction::link("Update Zed", "https://zed.dev/releases")
+crates/workspace/src/notifications.rs	Some("Zed needs an xdg-desktop-portal implementation to open files.".into())
+crates/workspace/src/pane.rs	in a comment, to https://github.com/zed-industries/zed/issues/33342",
+crates/workspace/src/workspace.rs	"Your are running an unsupported version of Zed. ",
+crates/workspace/src/workspace.rs	"project — Zed"
+crates/workspace/src/workspace.rs	Some(format!("Zed — root1, root2 — one — {expected_file_path}").as_str())
+crates/workspace/src/workspace.rs	app_name: "Zed",
+crates/workspace/src/workspace.rs	assert_eq!(cx.window_title().as_deref(), Some("Zed — root1, root2"));
+crates/workspace/src/workspace_error.rs	"https://zed.dev/docs/linux#i-cant-open-any-files",
+crates/zed/src/main.rs	"Zed/{} ({}; {})",
+crates/zed/src/main.rs	"{e:?}. See https://zed.dev/docs/linux for troubleshooting steps."
+crates/zed/src/main.rs	Notification::new("Zed failed to launch")
+crates/zed/src/main.rs	println!("Zed System Specs (from CLI):\n{}", system_specs);
+crates/zed/src/reliability.rs	"A GPU found on the users system. May or may not be the GPU Zed is running on",
+crates/zed/src/reliability.rs	"The GPU Zed is running on",
+crates/zed/src/watcher_debug.rs	const EXCLUSION_SCOPE: &str = "Patterns Zed skips when scanning your open local projects. Excluded files may still produce watcher events.";
+crates/zed/src/zed.rs	"https://zed.dev/docs/linux",
+crates/zed/src/zed.rs	"https://zed.dev/docs/linux#zed-fails-to-open-windows",
+crates/zed/src/zed.rs	This may be due to system-wide limits on inotify instances. For troubleshooting see: https://zed.dev/docs/linux
+crates/zed/src/zed.rs	cx.open_url("https://zed.dev/docs/linux#could-not-start-inotify");
+crates/zed/src/zed/open_listener.rs	"zed://git/clone/?repo=https%3A%2F%2Fgithub.com%2Fzed-industries%2Fzed.git"
+crates/zed/src/zed/open_listener.rs	"zed://git/clone/?repo=https://github.com/zed-industries/zed.git".into(),
+crates/zed/src/zed/open_listener.rs	"zed://git/clone?repo=https://github.com/zed-industries/zed.git".into(),
+crates/zed/src/zed/open_listener.rs	assert_eq!(repo_url, "https://github.com/zed-industries/zed.git");
+crates/zed/src/zed/quick_action_bar/repl_menu.rs	const ZED_REPL_DOCUMENTATION: &str = "https://zed.dev/docs/repl";
+crates/zed/src/zed/quick_action_bar/repl_menu.rs	let tooltip: SharedString = SharedString::from(format!("Setup Zed REPL for {}", language));
+crates/zed/src/zed/windows_only_instance.rs	IpcOneShotServer::<IpcHandshake>::new().context("Handshake before Zed spawn")?;
+crates/zed/src/zed/windows_only_instance.rs	let (_, handshake) = server.accept().context("Handshake after Zed spawn")?;

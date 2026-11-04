@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Lists user-facing "Zed" strings and Zed links that are not yet known to zblink.
+#
+# Run after merging upstream. Occurrences under paths in zblink-branding-allowlist.txt
+# (AI, macOS/Linux-only, release, collaboration) are ignored; the rest are compared with
+# zblink-branding-baseline.txt, which records occurrences reviewed and kept on purpose.
+# Only new occurrences are printed. Advisory: always exits 0 unless the script itself fails.
+#
+# Usage: script/check-zblink-branding [--update]
+#   --update  rewrite the baseline with the current occurrences (after reviewing them)
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+allowlist=script/zblink-branding-allowlist.txt
+baseline=script/zblink-branding-baseline.txt
+
+globs=(--glob '*.rs' --glob '!**/tests/**' --glob '!**/*test*.rs' --glob '!**/examples/**')
+while IFS= read -r line; do
+    [[ -z "$line" || "$line" == \#* ]] && continue
+    globs+=(--glob "!$line")
+done < "$allowlist"
+
+# Path and trimmed line text, without line numbers, so unrelated edits do not show up as new.
+current=$(rg --no-heading --no-line-number --with-filename "${globs[@]}" \
+    -e '"[^"]*\bZed\b[^"]*"' -e 'zed\.dev' -e 'zed-industries' crates \
+    | grep -v -E '^[^:]+:\s*//' \
+    | sed -E 's/^([^:]+):\s*/\1\t/' \
+    | LC_ALL=C sort -u)
+
+if [[ "${1:-}" == "--update" ]]; then
+    printf '%s\n' "$current" > "$baseline"
+    echo "Updated $baseline ($(wc -l < "$baseline") entries)"
+    exit 0
+fi
+
+new=$(LC_ALL=C comm -23 <(printf '%s\n' "$current") "$baseline" || true)
+if [[ -z "$new" ]]; then
+    echo "No new Zed strings or links."
+else
+    echo "New Zed strings or links ($(printf '%s\n' "$new" | wc -l)); replace them or run with --update:"
+    printf '%s\n' "$new"
+fi
