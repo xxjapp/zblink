@@ -41,10 +41,11 @@ use git_ui::unstaged_diff::UnstagedDiffToolbar;
 use git_ui_core::file_diff_view::FileDiffStyleToolbar;
 use gpui::{
     Action, App, AppContext as _, AsyncWindowContext, ClipboardItem, Context, DismissEvent,
-    Element, Entity, FocusHandle, Focusable, Image, ImageFormat, KeyBinding, ParentElement,
-    PathPromptOptions, PromptLevel, ReadGlobal, SharedString, Size, Task, TaskExt, TitlebarOptions,
-    UpdateGlobal, WeakEntity, Window, WindowBounds, WindowHandle, WindowKind, WindowOptions,
-    actions, image_cache, img, point, px, retain_all,
+    Element, Entity, FocusHandle, Focusable, Image, ImageFormat, KeyBinding, ObjectFit,
+    ParentElement, PathPromptOptions, PromptLevel, ReadGlobal, SharedString, Size, Task, TaskExt,
+    TitlebarOptions, UpdateGlobal, WeakEntity, Window, WindowBounds, WindowHandle, WindowKind,
+    WindowOptions, actions, image_cache, img, linear_color_stop, linear_gradient, point, px,
+    retain_all,
 };
 use image_viewer::ImageInfo;
 use language::Capability;
@@ -1530,26 +1531,18 @@ fn initialize_pane(
 }
 
 fn open_about_window(cx: &mut App) {
-    fn about_window_icon(release_channel: ReleaseChannel) -> Arc<Image> {
-        let bytes = match release_channel {
-            ReleaseChannel::Dev => include_bytes!("../resources/app-icon-dev.png").as_slice(),
-            ReleaseChannel::Nightly => {
-                include_bytes!("../resources/app-icon-nightly.png").as_slice()
-            }
-            ReleaseChannel::Preview => {
-                include_bytes!("../resources/app-icon-preview.png").as_slice()
-            }
-            ReleaseChannel::Stable => include_bytes!("../resources/app-icon.png").as_slice(),
-        };
-
-        Arc::new(Image::from_bytes(ImageFormat::Png, bytes.to_vec()))
+    // zblink: one artwork for all channels, drawn as the window background.
+    fn about_window_art() -> Arc<Image> {
+        let bytes = include_bytes!("../resources/about-art.jpg").as_slice();
+        Arc::new(Image::from_bytes(ImageFormat::Jpeg, bytes.to_vec()))
     }
 
     struct AboutWindow {
         focus_handle: FocusHandle,
         ok_entry: NavigableEntry,
         copy_entry: NavigableEntry,
-        app_icon: Arc<Image>,
+        art: Arc<Image>,
+        name: SharedString,
         message: SharedString,
         commit: Option<SharedString>,
         full_version: SharedString,
@@ -1568,6 +1561,10 @@ fn open_about_window(cx: &mut App) {
                 ""
             };
             let message: SharedString = format!("{release_channel_name} {version} {debug}").into();
+            let name: SharedString = format!("{release_channel_name} {debug}")
+                .trim_end()
+                .to_string()
+                .into();
             let commit = AppCommitSha::try_global(cx)
                 .map(|sha| sha.full())
                 .filter(|commit| !commit.is_empty())
@@ -1577,7 +1574,8 @@ fn open_about_window(cx: &mut App) {
                 focus_handle: cx.focus_handle(),
                 ok_entry: NavigableEntry::focusable(cx),
                 copy_entry: NavigableEntry::focusable(cx),
-                app_icon: about_window_icon(release_channel),
+                art: about_window_art(),
+                name,
                 message,
                 commit,
                 full_version,
@@ -1604,6 +1602,13 @@ fn open_about_window(cx: &mut App) {
             let ok_is_focused = self.ok_entry.focus_handle.contains_focused(window, cx);
             let copy_is_focused = self.copy_entry.focus_handle.contains_focused(window, cx);
 
+            // zblink: artwork on the right, faded into the theme background behind the text.
+            let background = cx.theme().colors().editor_background;
+            let short_commit = self
+                .commit
+                .as_ref()
+                .map(|commit| SharedString::from(commit.chars().take(10).collect::<String>()));
+
             Navigable::new(
                 v_flex()
                     .id("about-window")
@@ -1611,84 +1616,122 @@ fn open_about_window(cx: &mut App) {
                     .on_action(cx.listener(|_, _: &menu::Cancel, window, _cx| {
                         window.remove_window();
                     }))
+                    .relative()
                     .min_w_0()
                     .size_full()
-                    .bg(cx.theme().colors().editor_background)
+                    .bg(background)
                     .text_color(cx.theme().colors().text)
-                    .p_4()
-                    .when(cfg!(target_os = "macos"), |this| this.pt_10())
-                    .gap_4()
-                    .text_center()
-                    .justify_between()
+                    .child(
+                        img(self.art.clone())
+                            .absolute()
+                            .inset_0()
+                            .size_full()
+                            .object_fit(ObjectFit::Cover),
+                    )
+                    .child(div().absolute().inset_0().bg(linear_gradient(
+                        90.,
+                        linear_color_stop(background.opacity(0.95), 0.35),
+                        linear_color_stop(background.opacity(0.), 0.75),
+                    )))
                     .child(
                         v_flex()
-                            .w_full()
-                            .gap_2()
-                            .items_center()
-                            .child(img(self.app_icon.clone()).size_16().flex_none())
-                            .child(Headline::new(self.message.clone()))
-                            .when_some(self.commit.clone(), |this, commit| {
-                                this.child(
-                                    Label::new("Commit")
-                                        .color(Color::Muted)
-                                        .size(LabelSize::XSmall),
-                                )
-                                .child(Label::new(commit).size(LabelSize::Small))
-                            })
+                            .relative()
+                            .size_full()
+                            .p_6()
+                            .when(cfg!(target_os = "macos"), |this| this.pt_10())
+                            .justify_between()
                             .child(
-                                Label::new("Version")
-                                    .color(Color::Muted)
-                                    .size(LabelSize::XSmall),
-                            )
-                            .child(Label::new(self.full_version.clone()).size(LabelSize::Small)),
-                    )
-                    .child(
-                        h_flex()
-                            .w_full()
-                            .gap_1()
-                            .child(
-                                div()
-                                    .flex_1()
-                                    .track_focus(&self.ok_entry.focus_handle)
-                                    .on_action(cx.listener(|_, _: &menu::Confirm, window, _cx| {
-                                        window.remove_window();
-                                    }))
+                                v_flex()
+                                    .gap_2()
                                     .child(
-                                        Button::new("ok", "OK")
-                                            .full_width()
-                                            .style(ButtonStyle::OutlinedGhost)
-                                            .toggle_state(ok_is_focused)
-                                            .selected_style(ButtonStyle::Tinted(TintColor::Accent))
-                                            .on_click(cx.listener(|_, _, window, _cx| {
-                                                window.remove_window();
-                                            })),
+                                        Headline::new(self.name.clone()).size(HeadlineSize::Large),
+                                    )
+                                    .child(
+                                        Label::new("A fast, focused editor")
+                                            .color(Color::Muted)
+                                            .size(LabelSize::Small),
+                                    )
+                                    .child(
+                                        v_flex()
+                                            .mt_3()
+                                            .gap_1()
+                                            .child(Self::detail_row(
+                                                "Version",
+                                                self.full_version.clone(),
+                                            ))
+                                            .when_some(short_commit, |this, commit| {
+                                                this.child(Self::detail_row("Commit", commit))
+                                            }),
                                     ),
                             )
-                            .child(
-                                div()
-                                    .flex_1()
-                                    .track_focus(&self.copy_entry.focus_handle)
-                                    .on_action(cx.listener(
-                                        |this, _: &menu::Confirm, window, cx| {
-                                            this.copy_details(window, cx);
-                                        },
-                                    ))
-                                    .child(
-                                        Button::new("copy", "Copy")
-                                            .full_width()
-                                            .style(ButtonStyle::Tinted(TintColor::Accent))
-                                            .toggle_state(copy_is_focused)
-                                            .selected_style(ButtonStyle::Tinted(TintColor::Accent))
-                                            .on_click(cx.listener(|this, _event, window, cx| {
-                                                this.copy_details(window, cx);
-                                            })),
-                                    ),
-                            ),
+                            .child(self.render_buttons(ok_is_focused, copy_is_focused, cx)),
                     )
                     .into_any_element(),
             )
             .entry(self.ok_entry.clone())
             .entry(self.copy_entry.clone())
+        }
+    }
+
+    impl AboutWindow {
+        fn detail_row(label: &'static str, value: SharedString) -> impl IntoElement {
+            h_flex()
+                .gap_4()
+                .child(
+                    div().w_16().child(
+                        Label::new(label)
+                            .color(Color::Muted)
+                            .size(LabelSize::XSmall),
+                    ),
+                )
+                .child(Label::new(value).size(LabelSize::Small))
+        }
+
+        fn render_buttons(
+            &self,
+            ok_is_focused: bool,
+            copy_is_focused: bool,
+            cx: &mut Context<Self>,
+        ) -> impl IntoElement {
+            h_flex()
+                .w_48()
+                .gap_1()
+                .child(
+                    div()
+                        .flex_1()
+                        .track_focus(&self.ok_entry.focus_handle)
+                        .on_action(cx.listener(|_, _: &menu::Confirm, window, _cx| {
+                            window.remove_window();
+                        }))
+                        .child(
+                            Button::new("ok", "OK")
+                                .full_width()
+                                .style(ButtonStyle::OutlinedGhost)
+                                .toggle_state(ok_is_focused)
+                                .selected_style(ButtonStyle::Tinted(TintColor::Accent))
+                                .on_click(cx.listener(|_, _, window, _cx| {
+                                    window.remove_window();
+                                })),
+                        ),
+                )
+                .child(
+                    div()
+                        .flex_1()
+                        .track_focus(&self.copy_entry.focus_handle)
+                        .on_action(cx.listener(|this, _: &menu::Confirm, window, cx| {
+                            this.copy_details(window, cx);
+                        }))
+                        .child(
+                            Button::new("copy", "Copy")
+                                .full_width()
+                                .style(ButtonStyle::Tinted(TintColor::Accent))
+                                .toggle_state(copy_is_focused)
+                                .selected_style(ButtonStyle::Tinted(TintColor::Accent))
+                                .on_click(cx.listener(|this, _event, window, cx| {
+                                    this.copy_details(window, cx);
+                                })),
+                        ),
+                )
         }
     }
 
