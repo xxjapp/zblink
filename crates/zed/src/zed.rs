@@ -107,13 +107,12 @@ use workspace::{
 use workspace::{CloseProject, CloseWindow, RestoreBanner, with_active_or_new_workspace};
 use workspace::{Pane, notifications::DetachAndPromptErr};
 use zed_actions::{
-    About, GetMerch, OpenAccountSettings, OpenBrowser, OpenDocs, OpenProjectTasks,
-    OpenServerSettings, OpenSettingsFile, OpenStatusPage, OpenZedUrl, Quit,
+    About, OpenAccountSettings, OpenBrowser, OpenDocs, OpenProjectTasks, OpenServerSettings,
+    OpenSettingsFile, OpenZedUrl, Quit,
 };
 
-const DOCS_URL: &str = "https://zed.dev/docs/";
-const STATUS_URL: &str = "https://status.zed.dev";
-const MERCH_URL: &str = "https://merch.zed.dev/";
+// zblink has no docs site yet; docs and troubleshooting links point to the repository.
+const DOCS_URL: &str = "https://github.com/xxjapp/zblink";
 
 pub struct CrashHandler(pub Arc<crashes::Client>);
 
@@ -705,7 +704,7 @@ fn initialize_file_watcher(fs: &dyn Fs, window: &mut Window, cx: &mut Context<Wo
             db::indoc! {r#"
             ReadDirectoryChangesW initialization failed: {}
 
-            This may occur on network filesystems and WSL paths. For troubleshooting see: https://zed.dev/docs/windows
+            This may occur on network filesystems and WSL paths. For troubleshooting see: https://github.com/xxjapp/zblink
             "#},
             e
         );
@@ -719,7 +718,7 @@ fn initialize_file_watcher(fs: &dyn Fs, window: &mut Window, cx: &mut Context<Wo
         cx.spawn(async move |_, cx| {
             if prompt.await == Ok(0) {
                 cx.update(|cx| {
-                    cx.open_url("https://zed.dev/docs/windows");
+                    cx.open_url(DOCS_URL);
                     cx.quit()
                 });
             }
@@ -735,11 +734,7 @@ fn show_software_emulation_warning_if_needed(
 ) {
     if specs.is_software_emulated && std::env::var("ZED_ALLOW_EMULATED_GPU").is_err() {
         let (graphics_api, docs_url, open_url) = if cfg!(target_os = "windows") {
-            (
-                "DirectX",
-                "https://zed.dev/docs/windows",
-                "https://zed.dev/docs/windows",
-            )
+            ("DirectX", DOCS_URL, DOCS_URL)
         } else {
             (
                 "Vulkan",
@@ -749,7 +744,7 @@ fn show_software_emulation_warning_if_needed(
         };
         let message = format!(
             db::indoc! {r#"
-            Zed uses {} for rendering and requires a compatible GPU.
+            zblink uses {} for rendering and requires a compatible GPU.
 
             Currently you are using a software emulated GPU ({}) which
             will result in awful performance.
@@ -924,8 +919,7 @@ fn register_actions(
 ) {
     workspace
         .register_action(|_, _: &OpenDocs, _, cx| cx.open_url(DOCS_URL))
-        .register_action(|_, _: &OpenStatusPage, _, cx| cx.open_url(STATUS_URL))
-        .register_action(|_, _: &GetMerch, _, cx| cx.open_url(MERCH_URL))
+        // zblink: OpenStatusPage and GetMerch are left unregistered; they only lead to Zed's services.
         .register_action(
             |workspace: &mut Workspace,
              _: &input_latency_ui::DumpInputLatencyHistogram,
@@ -1764,7 +1758,7 @@ fn open_about_window(cx: &mut App) {
     cx.open_window(
         WindowOptions {
             titlebar: Some(TitlebarOptions {
-                title: Some("About Zed".into()),
+                title: Some("About zblink".into()),
                 appears_transparent: true,
                 traffic_light_position: Some(point(px(12.), px(12.))),
             }),

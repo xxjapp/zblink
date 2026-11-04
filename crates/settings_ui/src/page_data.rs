@@ -141,7 +141,7 @@ fn general_page(cx: &App) -> SettingsPage {
             SettingsPageItem::SectionHeader("General Settings"),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Accessible Mode",
-                description: "Optimize Zed's interface for assistive technology such as screen readers. When enabled, otherwise-collapsed controls stay expanded and keyboard-reachable.",
+                description: "Optimize zblink's interface for assistive technology such as screen readers. When enabled, otherwise-collapsed controls stay expanded and keyboard-reachable.",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("accessible_mode"),
@@ -327,7 +327,7 @@ fn general_page(cx: &App) -> SettingsPage {
             SettingsPageItem::SectionHeader("Security"),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Trust All Projects By Default",
-                description: "When opening Zed, avoid Restricted Mode by auto-trusting all projects, enabling use of all features without having to give permission to each new project.",
+                description: "When opening zblink, avoid Restricted Mode by auto-trusting all projects, enabling use of all features without having to give permission to each new project.",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("session.trust_all_projects"),
@@ -377,7 +377,7 @@ fn general_page(cx: &App) -> SettingsPage {
             }),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Restore On Startup",
-                description: "What to restore from the previous session when opening Zed.",
+                description: "What to restore from the previous session when opening zblink.",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("restore_on_startup"),
@@ -398,7 +398,7 @@ fn general_page(cx: &App) -> SettingsPage {
             SettingsPageItem::SettingItem(SettingItem {
                 files: USER,
                 title: "Preview Channel",
-                description: "Which settings should be activated only in Preview build of Zed.",
+                description: "Which settings should be activated only in Preview build of zblink.",
                 field: Box::new(
                     SettingField {
                         organization_override: None,
@@ -428,6 +428,8 @@ fn general_page(cx: &App) -> SettingsPage {
         ]
     }
 
+    // zblink: hidden; telemetry is off and the data retention item only applies to Zed's hosted models.
+    #[allow(dead_code)]
     fn privacy_section() -> [SettingsPageItem; 4] {
         [
             SettingsPageItem::SectionHeader("Privacy"),
@@ -545,7 +547,6 @@ fn general_page(cx: &App) -> SettingsPage {
             security_section(),
             workspace_restoration_section(),
             scoped_settings_section(),
-            privacy_section(),
             auto_update_section(),
             extensions_section(),
         )
@@ -740,7 +741,7 @@ fn appearance_page() -> SettingsPage {
                 discriminant: SettingItem {
                     files: USER,
                     title: "Icon Theme",
-                    description: "The custom set of icons Zed will associate with files and directories.",
+                    description: "The custom set of icons zblink will associate with files and directories.",
                     field: Box::new(SettingField {
                         organization_override: None,
                         json_path: Some("icon_theme$"),
@@ -4048,7 +4049,7 @@ fn search_and_files_page() -> SettingsPage {
             SettingsPageItem::SectionHeader("File Scan"),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "File Scan Exclusions",
-                description: "Files or globs of files that will be excluded by Zed entirely. They will be skipped during file scans, file searches, and not be displayed in the project file tree. Takes precedence over \"File Scan Inclusions\"",
+                description: "Files or globs of files that will be excluded by zblink entirely. They will be skipped during file scans, file searches, and not be displayed in the project file tree. Takes precedence over \"File Scan Inclusions\"",
                 field: Box::new(
                     SettingField {
                         organization_override: None,
@@ -4071,7 +4072,7 @@ fn search_and_files_page() -> SettingsPage {
             }),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "File Scan Inclusions",
-                description: "Files or globs of files that will be included by Zed, even when ignored by git. This is useful for files that are not tracked by git, but are still important to your project. Note that globs that are overly broad can slow down Zed's file scanning. \"File Scan Exclusions\" takes precedence over these inclusions",
+                description: "Files or globs of files that will be included by zblink, even when ignored by git. This is useful for files that are not tracked by git, but are still important to your project. Note that globs that are overly broad can slow down zblink's file scanning. \"File Scan Exclusions\" takes precedence over these inclusions",
                 field: Box::new(
                     SettingField {
                         organization_override: None,
@@ -7223,7 +7224,7 @@ fn debugger_page() -> SettingsPage {
             }),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Save Breakpoints",
-                description: "Whether breakpoints should be reused across Zed sessions.",
+                description: "Whether breakpoints should be reused across zblink sessions.",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("debugger.save_breakpoints"),
@@ -7260,7 +7261,7 @@ fn debugger_page() -> SettingsPage {
             }),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Log DAP Communications",
-                description: "Whether to log messages between active debug adapters and Zed.",
+                description: "Whether to log messages between active debug adapters and zblink.",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("debugger.log_dap_communications"),
@@ -8200,7 +8201,7 @@ fn version_control_page() -> SettingsPage {
                 discriminant: SettingItem {
                     files: USER,
                     title: "Disable Git Integration",
-                    description: "Disable all Git integration features in Zed.",
+                    description: "Disable all Git integration features in zblink.",
                     field: Box::new(SettingField::<bool> {
                         organization_override: None,
                         json_path: Some("git.disable_git"),
@@ -8883,7 +8884,7 @@ fn ai_page(cx: &App) -> SettingsPage {
             SettingsPageItem::SectionHeader("General"),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Disable AI",
-                description: "Whether to disable all AI features in Zed.",
+                description: "Whether to disable all AI features in zblink.",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("disable_ai"),
@@ -10139,7 +10140,7 @@ fn language_settings_data() -> Box<[SettingsPageItem]> {
             SettingsPageItem::SectionHeader("Autoclose"),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Use Autoclose",
-                description: "Whether to automatically type closing characters for you. For example, when you type '(', Zed will automatically add a closing ')' at the correct position.",
+                description: "Whether to automatically type closing characters for you. For example, when you type '(', zblink will automatically add a closing ')' at the correct position.",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("languages.$(language).use_autoclose"),
@@ -10159,7 +10160,7 @@ fn language_settings_data() -> Box<[SettingsPageItem]> {
             }),
             SettingsPageItem::SettingItem(SettingItem {
                 title: "Use Auto Surround",
-                description: "Whether to automatically surround text with characters for you. For example, when you select text and type '(', Zed will automatically surround text with ().",
+                description: "Whether to automatically surround text with characters for you. For example, when you select text and type '(', zblink will automatically surround text with ().",
                 field: Box::new(SettingField {
                     organization_override: None,
                     json_path: Some("languages.$(language).use_auto_surround"),

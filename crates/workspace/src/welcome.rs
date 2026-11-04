@@ -451,9 +451,9 @@ impl Render for WelcomePage {
         };
 
         let welcome_label = if self.fallback_to_recent_projects {
-            "Welcome back to Zed"
+            "Welcome back to zblink"
         } else {
-            "Welcome to Zed"
+            "Welcome to zblink"
         };
 
         h_flex()
@@ -487,7 +487,7 @@ impl Render for WelcomePage {
                             )
                             .child(
                                 v_flex().child(Headline::new(welcome_label)).child(
-                                    Label::new("The editor for what's next")
+                                    Label::new("A fast, focused editor")
                                         .size(LabelSize::Small)
                                         .color(Color::Muted)
                                         .italic(),
