@@ -1632,10 +1632,16 @@ fn open_about_window(cx: &mut App) {
                             .size_full()
                             .object_fit(ObjectFit::Cover),
                     )
+                    // Two overlapping two-stop gradients give a softer, eased fade than one.
                     .child(div().absolute().inset_0().bg(linear_gradient(
                         90.,
-                        linear_color_stop(background.opacity(0.95), 0.35),
-                        linear_color_stop(background.opacity(0.), 0.75),
+                        linear_color_stop(background.opacity(0.85), 0.25),
+                        linear_color_stop(background.opacity(0.), 0.7),
+                    )))
+                    .child(div().absolute().inset_0().bg(linear_gradient(
+                        90.,
+                        linear_color_stop(background.opacity(0.6), 0.2),
+                        linear_color_stop(background.opacity(0.), 0.95),
                     )))
                     .child(
                         v_flex()
