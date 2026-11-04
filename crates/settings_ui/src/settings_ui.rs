@@ -7513,6 +7513,13 @@ pub mod test {
         let release = credentials.defer_read(url);
         let provider = cx.update(|cx| {
             register_settings(cx);
+            // zblink: default.json sets disable_ai, which user settings cannot turn off;
+            // use the test defaults so the AI settings page behaves as upstream.
+            cx.update_global::<SettingsStore, _>(|store, cx| {
+                store
+                    .set_default_settings(settings::test_settings(), cx)
+                    .expect("test default settings");
+            });
             let app_state = AppState::test(cx);
             AppState::set_global(app_state.clone(), cx);
             let settings = r#"{"language_models":{"openai_compatible":{
