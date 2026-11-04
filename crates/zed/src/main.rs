@@ -407,7 +407,7 @@ fn main() {
                         app_version.patch,
                     )
                     .to_string(),
-                    binary: "zed".to_string(),
+                    binary: paths::APP_NAME_LOWERCASE.to_string(),
                     release_channel: release_channel::RELEASE_CHANNEL_NAME.clone(),
                     commit_sha: app_commit_sha
                         .as_ref()
