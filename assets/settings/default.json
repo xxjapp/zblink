@@ -168,8 +168,7 @@
   //         "restore_on_startup": "last_workspace",
   //  3. Do not restore previous workspaces
   //         "restore_on_startup": "none",
-  // zblink defaults to an empty tab for fast startup.
-  "restore_on_startup": "empty_tab",
+  "restore_on_startup": "last_session",
   // The default behavior when opening paths from the CLI without
   // an explicit `-e` (existing window) or `-n` (new window) flag.
   //

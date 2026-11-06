@@ -166,7 +166,6 @@ pub fn test_settings() -> &'static str {
         // tests keep exercising upstream behavior.
         util::merge_non_null_json_value_into(
             serde_json::json!({
-                "restore_on_startup": "last_session",
                 "disable_ai": false,
                 "auto_update": true,
                 "auto_install_extensions": { "html": true },
